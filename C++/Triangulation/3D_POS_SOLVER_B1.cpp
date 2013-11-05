@@ -2,7 +2,7 @@
  James Benjamin Harris
  3D POSITION CPP SOLVER
  james.ben.harris@gmail.com
- 10/31/2012
+ 11/04/2013
 */
 
 /* Standard C++ includes */
@@ -12,12 +12,6 @@
 #include <stdio.h>
 #include <iomanip>
 #include <Eigen/Dense>
-
-/*
-  Include directly the different
-  headers from cppconn/ and mysql_driver.h + mysql_util.h
-  (and mysql_connection.h). This will reduce your build time!
-*/
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
@@ -49,7 +43,7 @@ try {
 
   /* Create a connection */
   driver = get_driver_instance();
-  con = driver->connect("tcp://10.10.10.3:3306", "root", "clbgjc");
+  con = driver->connect("tcp://serverip:port", "username", "###");
   /* Connect to the MySQL test database */
   con->setSchema("PECKHAM_RAW_DATA");
   int i = 0;
