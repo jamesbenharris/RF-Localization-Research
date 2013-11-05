@@ -1,0 +1,54 @@
+html {
+	margin: 0;
+        padding: 0;
+}
+h1 {
+        margin: 0;
+        padding: 0;
+}
+body {
+        margin: 0;
+        padding: 0;
+
+}
+#logo 
+        text-align: center;
+        background: #333;
+        float: left;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 15%;
+	height:27px;
+}
+#menu {
+        top:0px;
+	background: #333;
+	float: left;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 85%;
+	height:27px;
+}
+#menu li {
+	float: left;
+	font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+#menu a {
+	background: #333 url("images/seperator.gif") bottom right no-repeat;
+	color: #ccc;
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 8px 12px;
+	text-decoration: none;
+	font-weight:normal;
+}
+#menu a:hover {
+	background: #666666 url("images/hover.gif") bottom center no-repeat;
+	color: #fff;
+	padding-bottom: 8px;
+	}

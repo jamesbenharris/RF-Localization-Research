@@ -1,0 +1,105 @@
+/*
+ Navicat MySQL Data Transfer
+
+ Source Server         : 10.10.10.3
+ Source Server Version : 50607
+ Source Host           : 10.10.10.3
+ Source Database       : PECKHAM_RAW_DATA
+
+ Target Server Version : 50607
+ File Encoding         : utf-8
+
+ Date: 10/31/2012 21:55:11 PM
+*/
+
+SET NAMES utf8;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+--  Table structure for `POSITION_CLIENTS`
+-- ----------------------------
+DROP TABLE IF EXISTS `POSITION_CLIENTS`;
+CREATE TABLE `POSITION_CLIENTS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MAC_CLIENT` varchar(50) DEFAULT NULL,
+  `X_POSITION` float DEFAULT NULL,
+  `Y_POSITION` float DEFAULT NULL,
+  `Z_POSITION` float DEFAULT NULL,
+  `DT` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `POSITION_CLIENTS_HISTORY`
+-- ----------------------------
+DROP TABLE IF EXISTS `POSITION_CLIENTS_HISTORY`;
+CREATE TABLE `POSITION_CLIENTS_HISTORY` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MAC_CLIENT` varchar(50) DEFAULT NULL,
+  `X_POSITION` float DEFAULT NULL,
+  `Y_POSITION` float DEFAULT NULL,
+  `Z_POSITION` float DEFAULT NULL,
+  `DT` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `RAW_PACKET_INFO`
+-- ----------------------------
+DROP TABLE IF EXISTS `RAW_PACKET_INFO`;
+CREATE TABLE `RAW_PACKET_INFO` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MAC_CLIENT` varchar(50) DEFAULT NULL,
+  `MAC_ROUTER` varchar(50) DEFAULT NULL,
+  `SIGNAL` float(100,10) DEFAULT NULL,
+  `DT` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=16811247 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `RAW_PACKET_INFO_HISTORY`
+-- ----------------------------
+DROP TABLE IF EXISTS `RAW_PACKET_INFO_HISTORY`;
+CREATE TABLE `RAW_PACKET_INFO_HISTORY` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `MAC_CLIENT` varchar(50) DEFAULT NULL,
+  `MAC_ROUTER` varchar(50) DEFAULT NULL,
+  `SIGNAL` float(100,10) DEFAULT NULL,
+  `DT` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=12735896 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Table structure for `ROUTERS`
+-- ----------------------------
+DROP TABLE IF EXISTS `ROUTERS`;
+CREATE TABLE `ROUTERS` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ROUTER_MAC` varchar(50) DEFAULT NULL,
+  `ROUTER_POSITION_X` float DEFAULT NULL,
+  `ROUTER_POSITION_Y` float DEFAULT NULL,
+  `ROUTER_POSITION_Z` float DEFAULT NULL,
+  `DT` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=3466037 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+--  Event structure for `CLEAN`
+-- ----------------------------
+DROP EVENT IF EXISTS `CLEAN`;
+delimiter ;;
+CREATE DEFINER=`root`@`10.10.10.%` EVENT `CLEAN` ON SCHEDULE EVERY 1 MINUTE STARTS '2012-08-26 02:12:08' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+SET @CURRENT = NOW();
+INSERT INTO RAW_PACKET_INFO_HISTORY
+SELECT *
+FROM RAW_PACKET_INFO
+WHERE DT < @CURRENT-INTERVAL 1 HOUR;
+
+DELETE
+FROM RAW_PACKET_INFO 
+WHERE DT < @CURRENT-INTERVAL 1 HOUR;
+END
+ ;;
+delimiter ;
+
+SET FOREIGN_KEY_CHECKS = 1;

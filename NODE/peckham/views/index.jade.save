@@ -1,0 +1,8 @@
+h1= title
+#location
+    - each loc in location
+      div.loc
+        div.created_at= loc.date
+        div.title 
+            a(href="/blog/"+loc._id)!= loc.date
+        div.body= loc.RSSI

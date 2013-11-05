@@ -1,0 +1,8 @@
+wlanconfig ath0 destroy
+sleep 10
+wlanconfig ath0 create wlandev wifi0 wlanmode monitor
+sleep 10
+ifconfig ath0 up
+echo '802' > /proc/sys/net/ath0/dev_type
+
+exit 0
